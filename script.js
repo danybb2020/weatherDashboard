@@ -1,114 +1,113 @@
-var startButton = document.getElementById("start-btn");
-var questionTime = 60;
-var penaltyTime = 5;
-var clock = document.getElementById("clock");
-var timer ;
-var changingQuestions = document.getElementById("question-container");
-var changingAnswers = document.getElementById("answer-buttons");
-var currentIndex =  0;
+$(document).ready(function() {
+   $("#search-button").on("click", function(){
+     var searchValue = $("#search-value").val();
 
+     $("#search-value").val("");
 
-
-function startQuiz (){
-   console.log('Started');
-   startButton.classList.add('hide');
-   changingQuestions.classList.remove('hide');
-   timer = setInterval(startTime, 1000);
-   setNextQuestion();
-
-}
-
-function setNextQuestion(){
-   var currentQuestion = questions [currentIndex];
-   changingQuestions.textContent=currentQuestion.question;
-   currentQuestion.answers.forEach(function(choice, i) {
-      var newBtn= document.createElement("button");
-      newBtn.setAttribute ("value", choice);
-      newBtn.textContent =  choice;
-      newBtn.onclick = selectAnswer;
-      changingAnswers.appendChild(newBtn)
-   });
-}
-
-function selectAnswer (){
-  ///text value of the button is the same as your correct answer 
-  console.log(this.getAttribute("value"));
-  console.log(questions[currentIndex].correctAnswer );
-  if (this.getAttribute("value") == questions[currentIndex].correctAnswer +'' ) {
-    
-    // get rid of old questions
-    var oldButtonsArr = document.querySelectorAll('#answer-buttons button');
-    oldButtonsArr.forEach(function(btn,i) {
-      btn.remove();
-    });
-
-    ///corrent index goes up one 
-    currentIndex ++;
-    setNextQuestion();
-
-  } else {
-  questionTime = questionTime-penaltyTime;
-  this.setAttribute("disabled", "disabled");
-  this.textContent =  "nope";
-
-
-    
+     searchWeather (searchValue);
   }
+   );
 
+   $(".history").on("click", "li", function () {
+searchWeather($this).text()
+   } 
+   );
+
+   function searchValue(searchValue){
+      $.ajax({
+          type: "GET",
+          url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=4a21ff43731177f977a6927c583837f2&units=imperial",
+          dataType: "json",
+          success: function(data) {
+            if (history.indexOf (searchValue)=== -1) {
+              history.push(searchValue);
+              window.localStorage.setItem("history", JSON.stringify(history));
+              makeRow(searchValue);
+            } 
+
+            $("#today").empty();
+
+            var title = $("<h2>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString() + ")" );
+            var card = $("<div>").addClass("card");
+            var wind = $("<p>").addClass("card-text").text("Wind Speed: " + data.wind.speed + " MPH");
+            var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
+            var temp = $("<p>").addClass("card-text").text("Temperature: " + data.main.temp + " °F");
+            var cardBody = $("<div>").addClass("card-body");
+            var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+
+            title.append(img);
+            cardBody.appen(title, temp, humid, wind) ;
+            card.append(cardBody)
+            $("#today").append(card);
+
+   function getForecast(searchValue) {
+$.AJAX({
+  type: "GET",
+  url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=4a21ff43731177f977a6927c583837f2&units=imperial",
+  dataType: "json",
+  success: function(data) {
+    $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row\">");
+    for (var i=0; i< data.list.lenght; i++) {
+
+      if (data.list[i].te_txt.indexOf("15:00:00") !== -1);{ 
+
+      var col=  $("<div>").addClass("col-md-2");
+      var card=  $("<div>").addClass("card bg-primary text-white");
+      var body=  $("<div>").addClass("card-body p-2");
+      var title = $("<h5>").addClass("card-title").text(new Date(data.list[i]).dt_txt.toLocaleDateString());
+      var img= $("<img>").attr("src","http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
+var p1 = $("<p>").addClass("card-text").text("Temp: " + data.list[i].main.temp_max+ " °F" );
+var p1 = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity+ " %" );
+
+col.append(card.append(body.append(title, img, p1, p2 )));
+$("forecast.row").append(col);
 }
-
-function stopGame (){
-clearInterval(timer);
-console.log ("End of quiz");
 }
-
-function startTime () {
-  questionTime --;
-  clock.textContent= questionTime ;
-  if (questionTime <= 0){
-
-  stopGame ();
-
-  }
-  
 }
-const questions = [
-  {
-    question: "Javascript is different than Java?",
-    answers: [
-      true, false, "both", "neither"
+});
+ }
+
+ function getUVIndex (lat, lon) {
+  $.AJAX({
+    type: "GET",
+    url: "http://api.openweathermap.org/data/2.5/uvi?appid=4a21ff43731177f977a6927c583837f2&lat=" + lat + "&lon=" + lon,
+    dataType: "json",
+    success: function(data) {
+      var uv = $("<p>").text("UV Index: ");
+      var btn = $("<span>").addClass("btn btn-sm").text(data.value);
+
+      if (data.value < 3 ) {
+        btn.addClass("btn-success");
+      }
+      else if(data.value < 7 ) {
+        btn.addClass("btn-warning");
+      }
+
+        else { 
+          btn.addClass("btn-danger");
+        }
+
+$("#today .card-body").append(uv.append(btn));
+
+
+      }
+      });
+
+    }
     
-    ],
-    correctAnswer: true
 
-  },
 
-  {
-    question: "Which is not true of Javascript?",
-    answers: [
-      "Answer1: can be inserted into HTML pages ", "Answer2: Javascript is not a coding language" , "Answer 3: is a client-side as well as server side scripting languageh", "Answer4: JavaScript is also an Object based Programming language"
-       
-    ],
-    correctAnswer: "Answer2: Javascript is not a coding language"
-  },
+ var history = JSON.parse(window.localStorage.getItem("history")) || [];
+ if (history.lenght > 0 ) {
+  searchWeather(history[history.lenght-1]);
+ }
 
-  {
-    question: "What is not true of an array?",
-    answers: [
-      "Answer1: Is is object lets you store multiple values in a single variable ", "Answer 2: It stores a fixed-size sequential collection of elements of the same type." , "Answer3: An array is used to store a collection of data,", "Answer4: It is not a collection of variables of the same type"
-       
-    ],
-    correctAnswer: "Answer4: It is not a collection of variables of the same type"
-  },
+ for (var i = 0 ; i < history.lenght; i++){
+   makeRow(history [i]);
+ }
+      });
 
-  {
-    question: "Which company developed JavaScript?",
-    answers: [
-      "Answer1: Microsoft", "Answer 2: Netscape" , "Answer3: Google", "Answer4: Apple "
-    
-    ],
-    correctAnswer: "Answer 2: Netscape"
-  }
+   
 
-];
- startButton.onclick=startQuiz
+
+
