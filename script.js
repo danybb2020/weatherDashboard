@@ -4,16 +4,22 @@ $(document).ready(function() {
 
      $("#search-value").val("");
 
-     searchWeather (searchValue);
-  }
-   );
+     searchWeather(searchValue);
+  });
 
    $(".history").on("click", "li", function () {
-searchWeather($this).text()
+searchWeather($(this).text());
    } 
    );
 
-   function searchValue(searchValue){
+   function makeRow(text){
+     var li = $("<li").addClass("list-group-item list-group-item-action").text(text);
+  $$(".history").append(li);
+  
+    }
+
+
+   function searchWeather(searchValue){
       $.ajax({
           type: "GET",
           url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=4a21ff43731177f977a6927c583837f2&units=imperial",
@@ -36,9 +42,13 @@ searchWeather($this).text()
             var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
 
             title.append(img);
-            cardBody.appen(title, temp, humid, wind) ;
+            cardBody.append(title, temp, humid, wind) ;
             card.append(cardBody)
             $("#today").append(card);
+
+getForecast(searchValue);
+getUVIndex(data.coord.lat, data.coord.lon);
+
 
    function getForecast(searchValue) {
 $.AJAX({
@@ -47,9 +57,10 @@ $.AJAX({
   dataType: "json",
   success: function(data) {
     $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row\">");
-    for (var i=0; i< data.list.lenght; i++) {
+   
+    for (var i=0; i< data.list.length; i++) {
 
-      if (data.list[i].te_txt.indexOf("15:00:00") !== -1);{ 
+      if (data.list[i].dt_txt.indexOf("15:00:00") !== -1){ 
 
       var col=  $("<div>").addClass("col-md-2");
       var card=  $("<div>").addClass("card bg-primary text-white");
@@ -68,7 +79,7 @@ $("forecast.row").append(col);
  }
 
  function getUVIndex (lat, lon) {
-  $.AJAX({
+  $.ajax({
     type: "GET",
     url: "http://api.openweathermap.org/data/2.5/uvi?appid=4a21ff43731177f977a6927c583837f2&lat=" + lat + "&lon=" + lon,
     dataType: "json",
@@ -102,12 +113,7 @@ $("#today .card-body").append(uv.append(btn));
   searchWeather(history[history.lenght-1]);
  }
 
- for (var i = 0 ; i < history.lenght; i++){
+ for (var i = 0 ; i < history.length; i++){
    makeRow(history [i]);
  }
-      });
-
-   
-
-
-
+} ) ;
