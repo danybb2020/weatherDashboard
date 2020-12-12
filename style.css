@@ -1,0 +1,140 @@
+header{
+    background-color:rgb(249, 236, 236);
+    color: black;
+    text-align: center;
+    font-size: larger;
+    height: 60px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    border: 5px solid black;
+} 
+
+body{
+    background-color: rgb(249, 236, 236);
+    text-align: center;
+}
+#container{
+    width: 100%;
+    height: 100%; 
+    
+    box-sizing: initial;
+}
+#histBox{
+    background-color: rgb(147, 155, 194);
+    color:white;
+    border: 5px solid black;
+}
+#search{
+    background-color: rgb(150, 110, 160);
+    height: 800px;
+    width: 20%;
+    float: left;
+    padding:5px;
+    text-align: center;
+    border: 5px solid black;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+ 
+#display{
+    width: 75%;
+    height: 800px;
+    margin-left: 21%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+}
+
+#weather{
+    height: 70%;
+    
+    margin-bottom: 20px;
+}
+
+#forecast{
+    border: 5px solid black;
+    height: 30%;
+    padding-left: 10%;
+    background-color: rgb(230, 181, 181);
+    color: black
+}
+
+#display{
+    background-color: rgb(174, 217, 244);
+    border: 5px solid black;
+    text-align: center;
+
+}
+
+#searchBtn{
+    background-color: rgb(18, 74, 130);
+}
+
+#day0{
+    width: 15%;
+    background-color: rgb(237, 154, 200);
+    color: white;
+    font-size: smaller;
+    height: 162px;
+    border-radius: 30px;
+    text-align: center;
+    float:left;
+    margin-right: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+#day1{
+    width: 15%;
+    background-color: rgb(237, 154, 200);
+    color: white;
+    font-size: smaller;
+    height: 162px;
+    border-radius: 30px;
+    text-align: center;
+    float:left;
+    margin-right: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+#day2{
+    width: 15%;
+    background-color: rgb(237, 154, 200);
+    color: white;
+    font-size: smaller;
+    height: 162px;
+    border-radius: 30px;
+    text-align: center;
+    float:left;
+    margin-right: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+
+}
+
+#day3{
+    width: 15%;
+    background-color: rgb(237, 154, 200);
+    color: white;
+    font-size: smaller;
+    height: 162px;
+    border-radius: 30px;
+    text-align: center;
+    float:left;
+    margin-right: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+#day4{
+    width: 15%;
+    background-color: rgb(237, 154, 200);
+    color: white;
+    font-size: smaller;
+    height: 162px;
+    border-radius: 30px;
+    text-align: center;
+    float:left;
+    margin-right: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
